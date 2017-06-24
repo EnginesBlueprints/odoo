@@ -27,7 +27,7 @@
         "url": "http://www.gnu.org/copyleft/gpl.html"
       }
     },
-    "timestamp": "2017-06-12 01:33:11 UTC"
+    "timestamp": "2017-06-25T09:49:48+10:00"
   },
   "software": {
     "base": {
@@ -45,7 +45,7 @@
     "scripts": {
       "start": {
         "language": "sh",
-        "content": "#!/bin/sh\r\ncd /home/app\r\n\r\nfresh=\"\"\r\nif test -f /home/app/log/fresh\r\n then\r\n   fresh=\"-i all\"\r\n   rm /home/app/log/fresh\r\nfi\r\nPID_FILE=/home/app/logs/odoo.pid\r\nexport PID_FILE\r\n. /home/trap.sh\r\nmkdir -p  /engines/var/run/flags/\r\n\r\n./odoo-bin -c debian/odoo.conf $fresh -d $dbname -r $dbuser   --db_password=$dbpasswd --db_host=$dbhost --without-demo=\"all\"  -D $VOLDIR/     --smtp=_Engines_System(smtp_host) --email-from=$from_email  --pidfile=/home/app/logs/odoo.pid &\r\n\r\ntouch /engines/var/run/flags/startup_complete\r\n wait \r\nsleep 600\r\n rm /engines/var/run/flags/startup_complete"
+        "content": "#!/bin/sh\r\ncd /home/app\r\n\r\nfresh=\"\"\r\nif test -f /home/app/log/fresh\r\n then\r\n   fresh=\"-i all\"\r\n   rm /home/app/log/fresh\r\nfi\r\nPID_FILE=/home/app/logs/odoo.pid\r\nexport PID_FILE\r\n. /home/engines/functions/trap.sh\r\n\r\nmkdir -p  /engines/var/run/flags/\r\n\r\n./odoo-bin -c debian/odoo.conf $fresh -d $dbname -r $dbuser   --db_password=$dbpasswd --db_host=$dbhost --without-demo=\"all\"  -D $VOLDIR/     --smtp=_Engines_System(smtp_host) --email-from=$from_email  --pidfile=/home/app/logs/odoo.pid &\r\n\r\ntouch /engines/var/run/flags/startup_complete\r\n wait \r\n\r\n rm /engines/var/run/flags/startup_complete\r\n exit"
       },
       "install": {
         "language": "sh",
