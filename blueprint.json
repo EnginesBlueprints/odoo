@@ -2,8 +2,8 @@
   "schema": {
     "type": "app_blueprint",
     "version": {
-      "major": 1,
-      "minor": 0
+      "major": 0,
+      "minor": 1
     },
     "origin": "Engines Developer Studio 0.2"
   },
@@ -27,12 +27,12 @@
         "url": "http://www.gnu.org/copyleft/gpl.html"
       }
     },
-    "timestamp": "2017-06-25T09:49:48+10:00"
+    "timestamp": "2020-02-27T16:49:21+11:00"
   },
   "software": {
     "base": {
       "name": "odoo",
-      "framework": "python",
+      "framework": "python3.7",
       "deployment_type": "web",
       "http_protocol": "http_and_https",
       "framework_port_override": 8069,
@@ -195,27 +195,27 @@
         "publisher_namespace": "EnginesSystem",
         "type_path": "filesystem/local/filesystem",
         "variables": {
-          "service_name": "_Engines_Builder(engine_name)",
+          "service_name": "data",
           "volume_src": " ",
+          "engine_path": "data",
           "permissions": "rw",
           "user": "_Engines_Builder(data_uid)",
           "group": "_Engines_Builder(group_uid)",
-          "engine_path": "data"
+          "fw_user": "_Engines_Builder(cont_user_id)",
+          "exclude_from_backup": "false"
         }
       },
       {
         "publisher_namespace": "EnginesSystem",
         "type_path": "database/sql/pgsql",
         "variables": {
+          "database_name": "_Engines_Builder(engine_name)",
+          "database_host": "_Engines_System(pgsql_host)",
+          "dbusername": "_Engines_Builder(engine_name)",
+          "dbpassword": "_Engines_System(random(10))",
           "collation": "C",
           "encoding": "utf8",
-          "dbpassword": "_Engines_System(random(10))",
-          "full_access": "false",
-          "rails_flavor": "postgres",
-          "database_host": "_Engines_System(pgsql_host)",
-          "database_name": "_Engines_Builder(engine_name)",
-          "db_flavor": "pgsql",
-          "dbusername": "_Engines_Builder(engine_name)"
+          "full_access": "false"
         }
       }
     ],
@@ -242,7 +242,8 @@
     },
     "persistent_directories": [
       {
-        "path": "app/logs"
+        "path": "app/logs",
+        "volume_name": "data"
       }
     ]
   }
