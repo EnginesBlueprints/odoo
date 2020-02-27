@@ -27,7 +27,7 @@
         "url": "http://www.gnu.org/copyleft/gpl.html"
       }
     },
-    "timestamp": "2020-02-27T19:39:31+11:00"
+    "timestamp": "2020-02-28T10:02:37+11:00"
   },
   "software": {
     "base": {
@@ -45,11 +45,15 @@
     "scripts": {
       "start": {
         "language": "sh",
-        "content": "#!/bin/sh\r\ncd /home/app\r\n. /home/app/venv/bin/activate\r\n/home/app/odoo.bin --proxy-mode --no-database-list \r\nsleep 5000\r\n\r\n exit"
+        "content": "#!/bin/sh\r\nPID_FILE=/var/run/engines/odoo.pid\r\n\r\nexport PID_FILE\r\nif test -f /tmp/first\r\n then\r\n  init='-i base'\r\n  rm /tmp/first\r\nfi\r\n\r\n. /home/engines/functions/trap.sh\r\n\r\ncd /home/app\r\n. /home/app/venv/bin/activate\r\n/home/app/odoo.bin --proxy-mode --no-database-list -config odoo.conf $init &\r\necho $! > /var/run/engines/odoo.pid\r\nwait \r\nstartup_complete"
       },
       "install": {
         "language": "sh",
         "content": "#!/bin/sh\r\n. /home/app/venv/bin/activate\r\ncd /home/app\r\n\r\n\r\npython -m pip install `cat requirements.txt | awk '{print $1}' |cut -f1 -d= |grep -v win32`\r\n\r\nmkdir -p /home/app/log/odoo\r\nmkdir -p /home/app/odoo/addons\r\nmkdir -p /home/app/addons\r\ntouch /home/app/log/fresh\r\n"
+      },
+      "first_run": {
+        "language": "sh",
+        "content": "#!/bin/sh\r\ntouch /tmp/first"
       },
       "post_install": {
         "language": "sh"
@@ -64,6 +68,9 @@
       },
       {
         "package": "libsasl2-dev"
+      },
+      {
+        "package": "Wkhtmltopdf"
       }
     ],
     "installed_packages": [
@@ -133,7 +140,7 @@
       {
         "path": "app/odoo.conf",
         "language": "text",
-        "content": "[options]\r\n; This is the password that allows database operations:\r\ndb_host = _Engines_Environment(dbhost)\r\ndb_port = False\r\ndb_user = _Engines_Environment(dbuser)\r\ndb_password = _Engines_Environment(dbpasswd)\r\ndb_name = _Engines_Environment(dbname)\r\nadmin_passwd = admin\r\naddons_path = /home/app/addons,/home/app/addons,/home/app/odoo/addons\r\nsmtp_server=_Engines_System(smtp_host)\r\nemail-from=odoo@_Engines_Environment(fqdn)"
+        "content": "[options]\r\n; This is the password that allows database operations:\r\ndb_host = _Engines_Environment(dbhost)\r\ndb_port = False\r\ndb_user = _Engines_Environment(dbuser)\r\ndb_password = _Engines_Environment(dbpasswd)\r\ndb_name = _Engines_Environment(dbname)\r\nadmin_passwd = admin\r\naddons_path = /home/app/addons,/home/app/addons,/home/app/odoo/addons\r\nsmtp_server=_Engines_System(smtp_host)\r\nemail-from=odoo@_Engines_Environment(fqdn)\r\nwithout_demo=WITHOUT_DEMO"
       }
     ],
     "database_seed": {
