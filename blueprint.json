@@ -27,7 +27,7 @@
         "url": "http://www.gnu.org/copyleft/gpl.html"
       }
     },
-    "timestamp": "2020-02-28T10:23:21+11:00"
+    "timestamp": "2020-02-28T10:49:47+11:00"
   },
   "software": {
     "base": {
@@ -49,11 +49,11 @@
       },
       "install": {
         "language": "sh",
-        "content": "#!/bin/sh\r\n. /home/app/venv/bin/activate\r\ncd /home/app\r\n\r\n\r\npython -m pip install `cat requirements.txt | awk '{print $1}' |cut -f1 -d= |grep -v win32`\r\n\r\nmkdir -p /home/app/log/odoo\r\nmkdir -p /home/app/odoo/addons\r\nmkdir -p /home/app/addons\r\ntouch /home/app/log/fresh\r\n"
+        "content": "#!/bin/sh\r\n. /home/app/venv/bin/activate\r\ncd /home/app\r\n\r\n\r\n\r\n\r\nmkdir -p /home/app/log/odoo\r\nmkdir -p /home/app/odoo/addons\r\nmkdir -p /home/app/addons\r\ntouch /home/app/log/fresh\r\n"
       },
       "first_run": {
         "language": "sh",
-        "content": "#!/bin/sh\r\ntouch /tmp/first"
+        "content": "#!/bin/sh\r\ncd /home/app\r\npython -m pip install `cat requirements.txt | awk '{print $1}' |cut -f1 -d= |grep -v win32`\r\n\r\ntouch /tmp/first"
       },
       "post_install": {
         "language": "sh"
