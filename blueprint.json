@@ -27,7 +27,7 @@
         "url": "http://www.gnu.org/copyleft/gpl.html"
       }
     },
-    "timestamp": "2020-02-27T17:33:51+11:00"
+    "timestamp": "2020-02-27T17:50:55+11:00"
   },
   "software": {
     "base": {
@@ -49,7 +49,7 @@
       },
       "install": {
         "language": "sh",
-        "content": "#!/bin/sh\r\n. /home/app/venv/bin/activate\r\ncd /home/app\r\n for mod in `cat requirements.txt\r\n  do\r\n     python${python_version} -m pip install --upgrade  $mod\r\n  done     \r\n#pip install -r requirements.txt\r\n\r\n\r\nmkdir -p /home/app/log/odoo\r\nmkdir -p /home/app/odoo/addons\r\nmkdir -p /home/app/addons\r\ntouch /home/app/log/fresh\r\n"
+        "content": "#!/bin/sh\r\n. /home/app/venv/bin/activate\r\ncd /home/app\r\n\r\npython${python_version} -m pip install --r requirements.txt\r\n\r\n\r\nmkdir -p /home/app/log/odoo\r\nmkdir -p /home/app/odoo/addons\r\nmkdir -p /home/app/addons\r\ntouch /home/app/log/fresh\r\n"
       },
       "post_install": {
         "language": "sh"
