@@ -27,7 +27,7 @@
         "url": "http://www.gnu.org/copyleft/gpl.html"
       }
     },
-    "timestamp": "2020-02-28T11:27:18+11:00"
+    "timestamp": "2020-02-28T11:53:24+11:00"
   },
   "software": {
     "base": {
@@ -45,7 +45,7 @@
     "scripts": {
       "start": {
         "language": "sh",
-        "content": "#!/bin/sh\r\nPID_FILE=/var/run/engines/odoo.pid\r\n\r\nexport PID_FILE\r\nif test -f /tmp/first\r\n then\r\n  init='-i base'\r\n  rm /tmp/first\r\nfi\r\n\r\n. /home/engines/functions/trap.sh\r\n\r\ncd /home/app\r\n. /home/app/venv/bin/activate\r\n/home/app/odoo-bin --proxy-mode --no-database-list -config odoo.conf $init &\r\necho $! > /var/run/engines/odoo.pid\r\nwait \r\nstartup_complete"
+        "content": "#!/bin/sh\r\nPID_FILE=/var/run/engines/odoo.pid\r\n\r\nexport PID_FILE\r\nif test -f /tmp/first\r\n then\r\n  init='-i base'\r\n  rm /tmp/first\r\nfi\r\n\r\n. /home/engines/functions/trap.sh\r\n\r\ncd /home/app\r\n. /home/app/venv/bin/activate\r\n/home/app/odoo-bin --proxy-mode --no-database-list --config odoo.conf $init &\r\necho $! > /var/run/engines/odoo.pid\r\nwait \r\nstartup_complete"
       },
       "install": {
         "language": "sh",
